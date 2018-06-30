@@ -6,7 +6,7 @@ class SearchController {
     
     async search({response}){
         const researchers = await Researcher.all()
-        response.status(201).json({
+        response.status(200).json({
             message: 'Successfully listed researchers.',
             data: researchers
         })
