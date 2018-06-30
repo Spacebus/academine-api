@@ -23,7 +23,7 @@ class OntologyController {
 
         const area = await Area.create(data)
 
-        response.status(201).json({
+        response.status(200).json({
             message: 'Successfully created a new area.',
             data: area
         })
