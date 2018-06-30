@@ -14,7 +14,7 @@ class AuthController {
         })
     }
 
-    async authenticate({request, auth}) {
+    async authenticate({request, response, auth}) {
         const { email, password } = request.all()
 
         const token = await auth.attempt(email, password)
