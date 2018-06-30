@@ -6,21 +6,27 @@ const Area = use('App/Models/Area')
 
 class OntologyController {
 
-    async researcher({request}){
+    async researcher({request, response}){
         const data = request.only(["name"])
 
         const researcher = await Researcher.create(data)
 
-        return researcher
+        response.status(201).json({
+            message: 'Successfully created a new researcher.',
+            data: researcher
+        })
 
     }
 
-    async area({request}){
+    async area({request, response}){
         const data = request.only(["name"])
 
         const area = await Area.create(data)
 
-        return area
+        response.status(201).json({
+            message: 'Successfully created a new area.',
+            data: area
+        })
     }
 }
 

@@ -3,12 +3,15 @@
 const User = use('App/Models/User')
 
 class AuthController {
-    async register({request}) {
+    async register({request, response}) {
         const data = request.only(['username', 'email', 'password'])
 
         const user = await User.create(data)
 
-        return user
+        response.status(201).json({
+            message: 'Successfully created a new user.',
+            data: user
+        })
     }
 
     async authenticate({request, auth}) {
@@ -16,7 +19,10 @@ class AuthController {
 
         const token = await auth.attempt(email, password)
         
-        return token
+        response.status(200).json({
+            message: 'Successfully authenticate.',
+            data: token
+        })
     }
 }
 
