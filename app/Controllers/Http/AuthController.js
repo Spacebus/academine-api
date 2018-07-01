@@ -4,10 +4,10 @@ const User = use('App/Models/User')
 
 class AuthController {
     async register({request, response}) {
-        const data = request.only(['username', 'email', 'password'])
+        const {username, email, password} = request.post()
         
         try{
-            const user = await User.create(data)
+            const user = await User.create({username, email, password})
             response.status(201).json({
                 message: 'Successfully created a new user.',
                 data: user
@@ -21,7 +21,7 @@ class AuthController {
     }
 
     async authenticate({request, response, auth}) {
-        const { email, password } = request.all()
+        const { email, password } = request.post()
 
         try {
             const token = await auth.attempt(email, password)
