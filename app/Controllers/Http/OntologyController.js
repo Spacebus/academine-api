@@ -1,32 +1,56 @@
 'use strict'
 
-const Researcher = use('App/Models/Researcher')
-
+const Researcher = use('App/Models/Researcher') 
 const Area = use('App/Models/Area')
 
 class OntologyController {
 
     async researcher({request, response}){
-        const data = request.only(["name"])
+        const {name, areas} = request.post()
 
-        const researcher = await Researcher.create(data)
+        try{
+            const researcher = await Researcher.create({name})
 
-        response.status(201).json({
-            message: 'Successfully created a new researcher.',
-            data: researcher
-        })
+            if(areas && areas.length > 0){
+                await researcher.areas().attach(areas)
+                researcher.areas = await researcher.areas().fetch()
+            }
 
+            response.status(201).json({
+                message: 'Successfully created a new researcher.',
+                data: researcher
+            })
+
+        } catch {
+            response.status(400).json({
+                message: 'Unsuccessfully created a new researcher.',
+                data: {}
+            })
+        }
     }
 
     async area({request, response}){
-        const data = request.only(["name"])
+        const {name, researchers} = request.post()
 
-        const area = await Area.create(data)
+        try {
+            const area = await Area.create({name})
 
-        response.status(201).json({
-            message: 'Successfully created a new area.',
-            data: area
-        })
+            if(researchers && researchers.length > 0){
+                await area.researchers().attach(researchers)
+                area.researchers = await area.researchers().fetch()
+            }
+
+            response.status(201).json({
+                message: 'Successfully created a new area.',
+                data: area
+            })
+
+        } catch {
+            response.status(400).json({
+                message: 'Unsuccessfully created a new area.',
+                data: {}
+            })
+        } 
     }
 }
 

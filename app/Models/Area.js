@@ -3,8 +3,8 @@
 const Model = use('Model')
 
 class Area extends Model {
-    researcher() {
-        return this.hasOne('App/Models/Researcher')
+    researchers() {
+        return this.belongsToMany('App/Models/Researcher')
     }
 }
 
