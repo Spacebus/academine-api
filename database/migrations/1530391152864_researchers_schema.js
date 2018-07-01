@@ -12,6 +12,8 @@ class ResearchersSchema extends Schema {
       table.string('uf')
       table.string('city')
       table.string('resume', 4000)
+      table.string('email')
+      table.string('phone')
       table.timestamps()
     })
   }

@@ -6,10 +6,10 @@ const Specialty = use('App/Models/Specialty')
 class OntologyController {
 
     async researcher({request, response}){
-        const {name, bibliographic_citation, country, uf, city, resume, specialties} = request.post()
+        const {name, bibliographic_citation, country, uf, city, resume, email, phone, specialties} = request.post()
 
         try{
-            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
+            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, email, phone})
 
             if(specialties && specialties.length > 0){
                 await researcher.specialties().attach(specialties)
