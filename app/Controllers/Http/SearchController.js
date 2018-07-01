@@ -1,44 +1,59 @@
 'use strict'
-
-const Researcher = use('App/Models/Researcher')
+const Database = use('Database')
 
 class SearchController {
     
     async search({request, response}){
-        const {areas} = request.only("areas")
-        const Database = use('Database')
-        console.log(areas)
+        const {areas} = request.post()
 
-        const researchers_ids = await Database
+        if(areas && areas.length > 0){
+            try{
+                const researchers_ids = await Database
                 .select("researcher_id")
                 .from("area_researcher")
                 .whereIn("area_researcher.area_id", areas)
-        console.log(researchers_ids)
         
-        var aux = []
+                var json_to_list = []
 
-        for (var key in researchers_ids){
-            aux.push(researchers_ids[key]["researcher_id"])
-        }
-        
-        const researchers_names = await Database
+                for (var key in researchers_ids){
+                    json_to_list.push(researchers_ids[key]["researcher_id"])
+                }
+                
+                const researchers_names = await Database
+                        .select("name")
+                        .from("researchers")
+                        .whereIn("researchers.id", json_to_list)
+                
+                response.status(200).json({
+                    message: 'Successfully listed researchers.',
+                    data: researchers_names
+                })
+            } catch {
+                response.status(400).json({
+                    message: 'Unsuccessfully listed researchers.',
+                    data: {}
+                })
+            }
+            
+
+        } else {
+            try {
+                var researchers = await Database
                 .select("name")
                 .from("researchers")
-                .whereIn("researchers.id", aux)
-        console.log(researchers_names)
+                response.status(200).json({
+                    message: 'Successfully listed researchers.',
+                    data: researchers
+                })
 
-        if (areas && areas.length > 0){
-            response.status(200).json({
-                message: 'Successfully listed researchers.',
-                data: researchers_names
-            })
+            } catch {
+                response.status(400).json({
+                    message: 'Unsuccessfully listed researchers.',
+                    data: {}
+                })
+            }
+            
         }
-        else {
-            response.status(200).json({
-                message: 'Unsuccessfully listed. Missing area ids',
-            })
-        }
-
     }
 }
 

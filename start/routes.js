@@ -24,5 +24,5 @@ Route.post('/researcher', 'OntologyController.researcher').middleware(['auth'])
 Route.post('/area', 'OntologyController.area').middleware(['auth'])
 
 //SearchController
-Route.get('/search', 'SearchController.search').middleware(['auth'])
+Route.post('/search', 'SearchController.search').middleware(['auth'])
 
