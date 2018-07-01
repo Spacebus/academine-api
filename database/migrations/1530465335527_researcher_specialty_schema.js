@@ -2,21 +2,21 @@
 
 const Schema = use('Schema')
 
-class AreaResearcherSchema extends Schema {
+class ResearcherSpecialtySchema extends Schema {
   up () {
-    this.create('area_researcher', (table) => {
+    this.create('researcher_specialty', (table) => {
       table.increments()
-      table
-        .integer('area_id')
-        .unsigned()
-        .index('area_id')
       table
         .integer('researcher_id')
         .unsigned()
         .index('researcher_id')
       table
-        .foreign('area_id')
-        .references('areas.id')
+        .integer('specialty_id')
+        .unsigned()
+        .index('specialty_id')      
+      table
+        .foreign('specialty_id')
+        .references('specialties.id')
         .onDelete('cascade')
       table
         .foreign('researcher_id')
@@ -26,8 +26,8 @@ class AreaResearcherSchema extends Schema {
   }
 
   down () {
-    this.drop('area_researcher')
+    this.drop('researcher_specialty')
   }
 }
 
-module.exports = AreaResearcherSchema
+module.exports = ResearcherSpecialtySchema

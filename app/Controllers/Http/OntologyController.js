@@ -1,19 +1,19 @@
 'use strict'
 
-const Researcher = use('App/Models/Researcher') 
-const Area = use('App/Models/Area')
+const Researcher = use('App/Models/Researcher')
+const Specialty = use('App/Models/Specialty')
 
 class OntologyController {
 
     async researcher({request, response}){
-        const {name, bibliographic_citation, country, uf, city, resume, areas} = request.post()
+        const {name, bibliographic_citation, country, uf, city, resume, specialties} = request.post()
 
         try{
             const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
 
-            if(areas && areas.length > 0){
-                await researcher.areas().attach(areas)
-                researcher.areas = await researcher.areas().fetch()
+            if(specialties && specialties.length > 0){
+                await researcher.specialties().attach(specialties)
+                researcher.specialties = await researcher.specialties().fetch()
             }
 
             response.status(201).json({
@@ -29,29 +29,30 @@ class OntologyController {
         }
     }
 
-    async area({request, response}){
+    async specialty({request, response}){
         const {name, researchers} = request.post()
 
         try {
-            const area = await Area.create({name})
+            const specialty = await Specialty.create({name})
 
             if(researchers && researchers.length > 0){
-                await area.researchers().attach(researchers)
-                area.researchers = await area.researchers().fetch()
+                await specialty.researchers().attach(researchers)
+                specialty.researchers = await specialty.researchers().fetch()
             }
 
             response.status(201).json({
-                message: 'Successfully created a new area.',
-                data: area
+                message: 'Successfully created a new specialty.',
+                data: specialty
             })
 
         } catch {
             response.status(400).json({
-                message: 'Unsuccessfully created a new area.',
+                message: 'Unsuccessfully created a new specialty.',
                 data: {}
             })
         } 
     }
+
 }
 
 module.exports = OntologyController
