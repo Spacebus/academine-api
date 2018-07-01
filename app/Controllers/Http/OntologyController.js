@@ -6,10 +6,10 @@ const Area = use('App/Models/Area')
 class OntologyController {
 
     async researcher({request, response}){
-        const {name, areas} = request.post()
+        const {name, bibliographic_citation, country, uf, city, resume, areas} = request.post()
 
         try{
-            const researcher = await Researcher.create({name})
+            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
 
             if(areas && areas.length > 0){
                 await researcher.areas().attach(areas)
