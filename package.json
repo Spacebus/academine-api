@@ -26,7 +26,8 @@
     "@adonisjs/ignitor": "^2.0.6",
     "@adonisjs/lucid": "^5.0.4",
     "node": "^10.5.0",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "xml-js": "^1.6.4"
   },
   "devDependencies": {},
   "autoload": {
