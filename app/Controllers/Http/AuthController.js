@@ -13,6 +13,7 @@ class AuthController {
                 data: user
             })
         } catch(err) {
+            console.info(err)
             response.status(406).json({
                 message: 'Unsuccessfully created a new user.',
                 data: {}
