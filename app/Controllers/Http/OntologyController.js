@@ -6,10 +6,10 @@ const Specialty = use('App/Models/Specialty')
 class OntologyController {
 
     async researcher({request, response}){
-        const {name, bibliographic_citation, country, uf, city, resume, email, phone, specialties} = request.post()
+        const {name, bibliographic_citation, country, uf, city, resume, email, phone, photo_url, lattes_url, specialties} = request.post()
 
         try{
-            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, email, phone})
+            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, email, phone, photo_url, lattes_url})
 
             if(specialties && specialties.length > 0){
                 await researcher.specialties().attach(specialties)
@@ -21,7 +21,7 @@ class OntologyController {
                 data: researcher
             })
 
-        } catch {
+        } catch(err) {
             response.status(400).json({
                 message: 'Unsuccessfully created a new researcher.',
                 data: {}
@@ -45,7 +45,7 @@ class OntologyController {
                 data: specialty
             })
 
-        } catch {
+        } catch(err) {
             response.status(400).json({
                 message: 'Unsuccessfully created a new specialty.',
                 data: {}

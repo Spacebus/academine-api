@@ -6,7 +6,7 @@ class ResearchersSchema extends Schema {
   up () {
     this.create('researchers', (table) => {
       table.increments()
-      table.string('name').unique()
+      table.string('name')
       table.string('bibliographic_citation')
       table.string('country')
       table.string('uf')
@@ -14,6 +14,8 @@ class ResearchersSchema extends Schema {
       table.string('resume', 4000)
       table.string('email')
       table.string('phone')
+      table.string('photo_url')
+      table.string('lattes_url')
       table.timestamps()
     })
   }

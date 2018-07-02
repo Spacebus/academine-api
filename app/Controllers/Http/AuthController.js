@@ -12,7 +12,7 @@ class AuthController {
                 message: 'Successfully created a new user.',
                 data: user
             })
-        } catch {
+        } catch(err) {
             response.status(406).json({
                 message: 'Unsuccessfully created a new user.',
                 data: {}
@@ -30,7 +30,7 @@ class AuthController {
                 message: 'Successfully authenticate.',
                 data: token
             })
-        } catch {
+        } catch(err) {
             response.status(406).json({
                 message: 'Unsuccessfully authenticate.',
                 data: {}
