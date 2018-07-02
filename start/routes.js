@@ -15,6 +15,9 @@
 
 const Route = use('Route')
 
+//RootController
+Route.get('/', 'RootController.index')
+
 //AuthController
 Route.post('/register', 'AuthController.register')
 Route.post('/authenticate', 'AuthController.authenticate')
