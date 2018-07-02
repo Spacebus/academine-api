@@ -2,7 +2,7 @@
 
 class RootController {
     index({response}){
-        response.status(400).json({
+        response.status(200).json({
             message: 'Successfully access to lattes-mining.',
             data: {}
         })        
