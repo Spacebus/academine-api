@@ -17,7 +17,7 @@ const Route = use('Route')
 
 //RootController
 Route.get('/', 'RootController.index')
-Route.post('/receive', 'RootController.receive')
+Route.post('/receive', 'RootController.receive').middleware(['auth'])
 
 //AuthController
 Route.post('/register', 'AuthController.register')
