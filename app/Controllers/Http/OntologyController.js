@@ -2,10 +2,11 @@
 
 const Researcher = use('App/Models/Researcher')
 const Specialty = use('App/Models/Specialty')
+const Database = use('Database')
 
 class OntologyController {
 
-    async researcher({request, response}){
+    async put_researcher({request, response}){
         const {name, bibliographic_citation, country, uf, city, resume, email, phone, photo_url, lattes_url, specialties} = request.post()
 
         try{
@@ -22,6 +23,7 @@ class OntologyController {
             })
 
         } catch(err) {
+            console.info(err)
             response.status(400).json({
                 message: 'Unsuccessfully created a new researcher.',
                 data: {}
@@ -29,7 +31,7 @@ class OntologyController {
         }
     }
 
-    async specialty({request, response}){
+    async put_specialty({request, response}){
         const {name, researchers} = request.post()
 
         try {
@@ -46,11 +48,59 @@ class OntologyController {
             })
 
         } catch(err) {
+            console.info(err)
             response.status(400).json({
                 message: 'Unsuccessfully created a new specialty.',
                 data: {}
             })
         } 
+    }
+
+    async post_researcher({request, response}){
+        const {query} = request.post()
+
+        try{
+            const researcher = await Database
+            .select('*')
+            .from('researchers')
+            .where('name', query)
+
+            response.status(200).json({
+                message: 'Successfully listed researchers.',
+                data: researcher
+            })
+
+        } catch(err){
+            console.info(err)
+            response.status(400).json({
+                message: 'Unsuccessfully listed researchers.',
+                data: {}
+            })
+        }
+
+    }
+
+    async post_specialty({request, response}){
+        const {query} = request.post()
+
+        try{
+            const specialty = await Database
+            .select('*')
+            .from('specialties')
+            .where('name', query)
+
+            response.status(200).json({
+                message: 'Successfully listed specialties.',
+                data: specialty
+            })
+
+        } catch(err){
+            console.info(err)
+            response.status(400).json({
+                message: 'Unsuccessfully listed specialties.',
+                data: {}
+            })
+        }
     }
 
 }

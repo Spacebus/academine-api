@@ -24,8 +24,10 @@ Route.post('/register', 'AuthController.register')
 Route.post('/authenticate', 'AuthController.authenticate')
 
 //OntologyController
-Route.post('/researcher', 'OntologyController.researcher').middleware(['auth'])
-Route.post('/specialty', 'OntologyController.specialty').middleware(['auth'])
+Route.put('/researcher', 'OntologyController.put_researcher').middleware(['auth'])
+Route.post('/researcher', 'OntologyController.post_researcher').middleware(['auth'])
+Route.put('/specialty', 'OntologyController.put_specialty').middleware(['auth'])
+Route.post('/specialty', 'OntologyController.post_specialty').middleware(['auth'])
 
 //SearchController
 Route.post('/search', 'SearchController.search').middleware(['auth'])
