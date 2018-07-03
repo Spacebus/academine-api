@@ -72,8 +72,8 @@ class AppController {
     async receive({request, response}){
         const { xml } = request.post()
         try {
-            var json = xmlJs.xml2json(xml, {compact: true, spaces: 4})
-            // var name = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-COMPLETO']
+            var json = JSON.parse(xmlJs.xml2json(xml, {compact: true, spaces: 4}))
+            var name = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-COMPLETO']
             // var bibliographic_citation = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-EM-CITACOES-BIBLIOGRAFICAS']
             // var country = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['PAIS-DE-NASCIMENTO']
             // var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
