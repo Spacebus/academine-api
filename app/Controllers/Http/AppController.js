@@ -72,7 +72,7 @@ class AppController {
         try {
             xmls.forEach(xml => {
                 var string_xml = xml.replace(/^\uFEFF/g, '')
-                json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
+                var json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
                 console.info(json)
             })
 
