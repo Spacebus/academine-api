@@ -80,8 +80,8 @@ class AppController {
             var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
             var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
             var resume = json['CURRICULO-VITAE']['DADOS-GERAIS']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
-            
-            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
+            var lattes_url = "http://lattes.cnpq.br/" + json['CURRICULO-VITAE']._attributes['NUMERO-IDENTIFICADOR']
+            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, lattes_url})
 
             var specialties = json["CURRICULO-VITAE"]['DADOS-GERAIS']['AREAS-DE-ATUACAO']['AREA-DE-ATUACAO']
 
