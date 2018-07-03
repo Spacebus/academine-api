@@ -14,21 +14,13 @@
 */
 
 const Route = use('Route')
-
-//RootController
 Route.get('/', 'RootController.index')
 Route.post('/receive', 'RootController.receive').middleware(['auth'])
-
-//AuthController
 Route.post('/register', 'AuthController.register')
 Route.post('/authenticate', 'AuthController.authenticate')
-
-//OntologyController
 Route.put('/researcher', 'OntologyController.put_researcher').middleware(['auth'])
 Route.post('/researcher', 'OntologyController.post_researcher').middleware(['auth'])
 Route.put('/specialty', 'OntologyController.put_specialty').middleware(['auth'])
 Route.post('/specialty', 'OntologyController.post_specialty').middleware(['auth'])
-
-//SearchController
 Route.post('/search', 'SearchController.search').middleware(['auth'])
 

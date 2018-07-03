@@ -29,6 +29,7 @@ class SearchController {
                     data: researchers_names
                 })
             } catch(err) {
+                console.info(err)
                 response.status(400).json({
                     message: 'Unsuccessfully listed researchers.',
                     data: {}
@@ -47,6 +48,7 @@ class SearchController {
                 })
 
             } catch(err) {
+                console.info(err)
                 response.status(400).json({
                     message: 'Unsuccessfully listed researchers.',
                     data: {}
