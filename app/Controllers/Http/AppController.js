@@ -97,18 +97,19 @@ class AppController {
                     name = s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO']
                 }
 
-                var checkExist = await Database
+                var checkExist = Database
                 .select("name")
                 .from("specialties")
                 .where("name", name)
 
                 if (JSON.stringify(checkExist) === JSON.stringify({})){
-                    const specialty = await Specialty.create({name})
-                    await specialty.researchers().attach([researcher.id])
-                    specialty.researchers = await specialty.researchers().fetch()
+                    const specialty = Specialty.create({name})
+                    pecialty.researchers().attach([researcher.id])
+                    specialty.researchers = specialty.researchers().fetch()
                 }
 
             })
+            
             response.status(200).json({
                 message: 'Successfully receive data.',
                 data: researcher
