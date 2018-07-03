@@ -102,6 +102,9 @@ class AppController {
                 .from("specialties")
                 .where("name", name)
 
+                console.log(checkExist)
+                console.info(name)
+
                 var valid = (function isEmpty(obj) {
                     for(var key in obj) {
                         if(obj.hasOwnProperty(key))
