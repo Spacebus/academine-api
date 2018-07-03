@@ -84,7 +84,7 @@ class AppController {
                 var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
                 var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
                 var resume = json['CURRICULO-VITAE']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
-                const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, email, phone, photo_url, lattes_url})
+                var researcher = Researcher.create({name, bibliographic_citation, country, uf, city, resume})
                 researchers.push(researcher)
             })
 
