@@ -104,6 +104,8 @@ class AppController {
                 .groupBy('id')
                 .count()
 
+                console.info(count)
+
                 var total = count[0]['count(*)']
 
                 if(total === 0){
