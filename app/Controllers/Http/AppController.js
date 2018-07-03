@@ -104,11 +104,7 @@ class AppController {
                 .groupBy('id')
                 .count()
 
-                console.info(count)
-
-                var total = count[0]['count(*)']
-
-                if(total === 0){
+                if(count.length === 0){
                     var specialty = await Specialty.create({name})
                     await specialty.researchers().attach([researcher.id])
                     specialty.researchers = await specialty.researchers().fetch()
