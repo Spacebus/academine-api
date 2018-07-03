@@ -85,7 +85,7 @@ class AppController {
 
             var specialties = json["CURRICULO-VITAE"]['DADOS-GERAIS']['AREAS-DE-ATUACAO']['AREA-DE-ATUACAO']
 
-            for(s of specialties) {
+            for(var s of specialties) {
                 let name = "";
                 if(s._attributes['NOME-DA-ESPECIALIDADE'] !== "") {
                     name = s._attributes['NOME-DA-ESPECIALIDADE']
