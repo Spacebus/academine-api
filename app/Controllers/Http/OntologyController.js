@@ -63,7 +63,7 @@ class OntologyController {
             const researcher = await Database
             .select('*')
             .from('researchers')
-            .where('name','LIKE', "%"+query+"%")
+            .where('name','LIKE', query+"%")
 
             response.status(200).json({
                 message: 'Successfully listed researchers.',
@@ -87,7 +87,7 @@ class OntologyController {
             const specialty = await Database
             .select('*')
             .from('specialties')
-            .where('name','LIKE', "%"+query+"%")
+            .where('name','LIKE', query+"%")
 
             response.status(200).json({
                 message: 'Successfully listed specialties.',
