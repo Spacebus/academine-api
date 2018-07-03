@@ -101,6 +101,7 @@ class AppController {
                 .select('id')
                 .from('specialties')
                 .where('name', name)
+                .groupBy('id')
                 .count()
 
                 var total = count[0]['count(*)']
