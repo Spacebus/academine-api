@@ -14,13 +14,14 @@
 */
 
 const Route = use('Route')
-Route.get('/', 'RootController.index')
-Route.post('/receive', 'RootController.receive').middleware(['auth'])
+Route.get('/', 'AppController.index')
+Route.post('/receive', 'AppController.receive').middleware(['auth'])
+Route.post('/search', 'AppController.search').middleware(['auth'])
 Route.post('/register', 'AuthController.register')
 Route.post('/authenticate', 'AuthController.authenticate')
 Route.put('/researcher', 'OntologyController.put_researcher').middleware(['auth'])
 Route.post('/researcher', 'OntologyController.post_researcher').middleware(['auth'])
 Route.put('/specialty', 'OntologyController.put_specialty').middleware(['auth'])
 Route.post('/specialty', 'OntologyController.post_specialty').middleware(['auth'])
-Route.post('/search', 'SearchController.search').middleware(['auth'])
+
 

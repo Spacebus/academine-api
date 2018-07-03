@@ -1,7 +1,16 @@
 'use strict'
-const Database = use('Database')
 
-class SearchController {
+const Database = use('Database')
+const xmlJs = use('xml-js')
+
+class AppController {
+    
+    async index({response}){
+        response.status(200).json({
+            message: 'Successfully access to lattes mining api.',
+            data: {}
+        })        
+    }
 
     async search({request, response}){
         const {specialties} = request.post()
@@ -19,14 +28,13 @@ class SearchController {
                     json_to_list.push(researchers_ids[key]["researcher_id"])
                 }
 
-                const researchers_names = await Database
-                        .select("name")
+                const researchers = await Database
+                        .select("*")
                         .from("researchers")
                         .whereIn("researchers.id", json_to_list)
-
                 response.status(200).json({
                     message: 'Successfully listed researchers.',
-                    data: researchers_names
+                    data: researchers
                 })
             } catch(err) {
                 console.info(err)
@@ -40,23 +48,46 @@ class SearchController {
         } else {
             try {
                 var researchers = await Database
-                .select("name")
+                .select("*")
                 .from("researchers")
+
                 response.status(200).json({
-                    message: 'Successfully listed researchers.',
+                    message: 'Successfully listed all researchers.',
                     data: researchers
                 })
 
             } catch(err) {
                 console.info(err)
                 response.status(400).json({
-                    message: 'Unsuccessfully listed researchers.',
+                    message: 'Unsuccessfully listed all researchers.',
                     data: {}
                 })
             }
 
         }
     }
+
+    async receive({request, response}){
+        const {xmls} = request.post()
+        try {
+            for(var xml in xmls){
+                string_xml = xml.replace("-","_")
+                json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
+            }
+
+            response.status(200).json({
+                message: 'Successfully receive data.',
+                data: {}
+            })
+
+        } catch(err){
+            console.info(err)
+            response.status(400).json({
+                message: 'Unsuccessfully receive data.',
+                data: {}
+            })
+        } 
+    }
 }
 
-module.exports = SearchController
+module.exports = AppController
