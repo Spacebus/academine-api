@@ -72,15 +72,14 @@ class AppController {
     async receive({request, response}){
         const { xml } = request.post()
         try {
-            var json = xmlJs.xml2json(xml, {compact: true, spaces: 4})
-            var name = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-COMPLETO']
-            var bibliographic_citation = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-EM-CITACOES-BIBLIOGRAFICAS']
-            var country = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['PAIS-DE-NASCIMENTO']
-            var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
-            var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
-            var resume = json['CURRICULO-VITAE']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
-            var researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
-
+            // var json = xmlJs.xml2json(xml, {compact: true, spaces: 4})
+            // var name = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-COMPLETO']
+            // var bibliographic_citation = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-EM-CITACOES-BIBLIOGRAFICAS']
+            // var country = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['PAIS-DE-NASCIMENTO']
+            // var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
+            // var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
+            // var resume = json['CURRICULO-VITAE']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
+            // var researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
             response.status(200).json({
                 message: 'Successfully receive data.',
                 data: json
