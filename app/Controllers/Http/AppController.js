@@ -3,6 +3,7 @@
 const Database = use('Database')
 const xmlJs = use('xml-js')
 const Researcher = use('App/Models/Researcher')
+const Specialty = use('App/Models/Specialty')
 
 
 class AppController {
@@ -79,7 +80,35 @@ class AppController {
             var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
             var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
             var resume = json['CURRICULO-VITAE']['DADOS-GERAIS']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
-            var researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
+            
+            const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume})
+
+            var specialties = json["CURRICULO-VITAE"]['DADOS-GERAIS']['AREAS-DE-ATUACAO']['AREA-DE-ATUACAO']
+
+            specialties.forEach((s) => {
+                let name = "";
+                if(s._attributes['NOME-DA-ESPECIALIDADE'] !== "") {
+                    name = s._attributes['NOME-DA-ESPECIALIDADE']
+                } else if (s._attributes['NOME-DA-SUB-AREA-DO-CONHECIMENTO'] !== "") {
+                    name = s._attributes['NOME-DA-SUB-AREA-DO-CONHECIMENTO']
+                } else if (s._attributes['NOME-DA-AREA-DO-CONHECIMENTO'] !== "") {
+                    name = s._attributes['NOME-DA-AREA-DO-CONHECIMENTO']
+                } else if (s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO'] !== "") {
+                    name = s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO']
+                }
+
+                var checkExist = await Database
+                .select("name")
+                .from("specialties")
+                .where("name", name)
+
+                if (JSON.stringify(checkExist) === JSON.stringify({})){
+                    const specialty = await Specialty.create({name})
+                    await specialty.researchers().attach([researcher.id])
+                    specialty.researchers = await specialty.researchers().fetch()
+                }
+
+            })
             response.status(200).json({
                 message: 'Successfully receive data.',
                 data: researcher
