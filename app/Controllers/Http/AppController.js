@@ -71,8 +71,9 @@ class AppController {
         const {xmls} = request.post()
         try {
             for(var xml in xmls){
-                string_xml = xml.replace("-","_")
+                var string_xml = xml.replace("-","_")
                 json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
+                console.info(json)
             }
 
             response.status(200).json({
