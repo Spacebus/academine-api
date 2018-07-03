@@ -85,7 +85,7 @@ class AppController {
 
             var specialties = json["CURRICULO-VITAE"]['DADOS-GERAIS']['AREAS-DE-ATUACAO']['AREA-DE-ATUACAO']
 
-            specialties.forEach((s) => {
+            for(s of specialties) {
                 let name = "";
                 if(s._attributes['NOME-DA-ESPECIALIDADE'] !== "") {
                     name = s._attributes['NOME-DA-ESPECIALIDADE']
@@ -96,10 +96,10 @@ class AppController {
                 } else if (s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO'] !== "") {
                     name = s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO']
                 }
-                var specialty = Specialty.create({name})
-                specialty.researchers().attach([researcher.id])
-                specialty.researchers = specialty.researchers().fetch()
-            })
+                var specialty = await Specialty.create({name})
+                await specialty.researchers().attach([researcher.id])
+                specialty.researchers = await specialty.researchers().fetch()
+            }
 
             response.status(200).json({
                 message: 'Successfully receive data.',
