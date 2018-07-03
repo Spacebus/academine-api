@@ -96,29 +96,9 @@ class AppController {
                 } else if (s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO'] !== "") {
                     name = s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO']
                 }
-
-                var checkExist = Database
-                .select("name")
-                .from("specialties")
-                .where("name", name)
-
-                console.log(checkExist)
-                console.info(name)
-
-                var valid = (function isEmpty(obj) {
-                    for(var key in obj) {
-                        if(obj.hasOwnProperty(key))
-                            return false;
-                    }
-                    return true;
-                })(checkExist);
-                
-                if (valid){
-                    const specialty = Specialty.create({name})
-                    pecialty.researchers().attach([researcher.id])
-                    specialty.researchers = specialty.researchers().fetch()
-                }
-
+                var specialty = Specialty.create({name})
+                specialty.researchers().attach([researcher.id])
+                specialty.researchers = specialty.researchers().fetch()
             })
 
             response.status(200).json({
