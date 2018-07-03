@@ -2,6 +2,8 @@
 
 const Database = use('Database')
 const xmlJs = use('xml-js')
+const Researcher = use('App/Models/Researcher')
+
 
 class AppController {
     
@@ -71,17 +73,24 @@ class AppController {
         const {xmls} = request.post()
         try {
 
-            var jsons = []
+            var researchers = []
 
             xmls.forEach(xml => {
                 var string_xml = xml.replace(/^\uFEFF/g, '')
                 var json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
-                jsons.push(json)
+                var name = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-COMPLETO']
+                var bibliographic_citation = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['NOME-EM-CITACOES-BIBLIOGRAFICAS']
+                var country = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['PAIS-DE-NASCIMENTO']
+                var uf = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['UF-NASCIMENTO']
+                var city = json['CURRICULO-VITAE']['DADOS-GERAIS']._attributes['CIDADE-NASCIMENTO']
+                var resume = json['CURRICULO-VITAE']['RESUMO-CV']._attributes['TEXTO-RESUMO-CV-RH']
+                const researcher = await Researcher.create({name, bibliographic_citation, country, uf, city, resume, email, phone, photo_url, lattes_url})
+                researchers.push(researcher)
             })
 
             response.status(200).json({
                 message: 'Successfully receive data.',
-                data: jsons
+                data: researchers
             })
 
         } catch(err){
