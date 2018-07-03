@@ -69,14 +69,15 @@ class AppController {
 
     async receive({request, response}){
         const {xmls} = request.post()
+        console.log(xmls)
         try {
-            for(var xml in xmls){
+            xmls.forEach(xml => {
                 console.info(xml)
                 var string_xml = xml.replace(/^\uFEFF/g, '')
                 console.info(string_xml)
                 json = xmlJs.xml2json(string_xml, {compact: true, spaces: 4})
                 console.info(json)
-            }
+            })
 
             response.status(200).json({
                 message: 'Successfully receive data.',
