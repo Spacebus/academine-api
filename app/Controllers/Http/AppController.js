@@ -9,7 +9,7 @@ class AppController {
     
     async index({response}){
         response.status(200).json({
-            message: 'Successfully access to lattes mining api.',
+            message: 'Successfully access to academine api.',
             data: {}
         })        
     }
