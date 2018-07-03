@@ -96,9 +96,27 @@ class AppController {
                 } else if (s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO'] !== "") {
                     name = s._attributes['NOME-DA-GRANDE-AREA-DO-CONHECIMENTO']
                 }
-                var specialty = await Specialty.create({name})
-                await specialty.researchers().attach([researcher.id])
-                specialty.researchers = await specialty.researchers().fetch()
+                
+                var count = await Database
+                .select('id')
+                .from('specialties')
+                .where('name', name)
+                .count()
+
+                var total = count[0]['count(*)']
+
+                if(total === 0){
+                    var specialty = await Specialty.create({name})
+                    await specialty.researchers().attach([researcher.id])
+                    specialty.researchers = await specialty.researchers().fetch()
+                }else{
+                    var specialty = await Database
+                    .select('*')
+                    .from('specialties')
+                    .where('name', name)
+                    await specialty.researchers().attach([researcher.id])
+                    specialty.researchers = await specialty.researchers().fetch()
+                }
             }
 
             response.status(200).json({
