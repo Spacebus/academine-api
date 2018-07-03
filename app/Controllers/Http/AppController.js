@@ -111,11 +111,7 @@ class AppController {
                     await specialty.researchers().attach([researcher.id])
                     specialty.researchers = await specialty.researchers().fetch()
                 }else{
-                    console.info("oi")
-                    var specialty = await Database
-                    .select('*')
-                    .from('specialties')
-                    .where('name', name)
+                    var specialty = await Specialty.findBy('name', name)
                     await specialty.researchers().attach([researcher.id])
                     specialty.researchers = await specialty.researchers().fetch()
                 }
