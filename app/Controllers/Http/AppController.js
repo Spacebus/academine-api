@@ -102,14 +102,22 @@ class AppController {
                 .from("specialties")
                 .where("name", name)
 
-                if (JSON.stringify(checkExist) === JSON.stringify({})){
+                var valid = (function isEmpty(obj) {
+                    for(var key in obj) {
+                        if(obj.hasOwnProperty(key))
+                            return false;
+                    }
+                    return true;
+                })(checkExist);
+                
+                if (valid){
                     const specialty = Specialty.create({name})
                     pecialty.researchers().attach([researcher.id])
                     specialty.researchers = specialty.researchers().fetch()
                 }
 
             })
-            
+
             response.status(200).json({
                 message: 'Successfully receive data.',
                 data: researcher
